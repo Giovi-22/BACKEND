@@ -2,7 +2,7 @@ import ProductManager from '../manager/ProductManager.js';
 
 class ProductController{
 
-    addProduct = async (req,res)=>{
+    static addProduct = async (req,res)=>{
             const product = req.body;
             try {
                 const pManager = new ProductManager();
@@ -14,7 +14,7 @@ class ProductController{
             }
     }
 
-    getProduct = async (req,res)=>{
+    static getProduct = async (req,res)=>{
         const pid = req.params.pid;
         try {
             const pManager = new ProductManager();
@@ -26,7 +26,7 @@ class ProductController{
         }
     }
 
-    updateProduct = async (req,res)=>{
+    static updateProduct = async (req,res)=>{
         const pid = req.params.pid;
         try {
             const pManager = new ProductManager();
@@ -38,7 +38,7 @@ class ProductController{
         }
     }
 
-    deleteProduct = async (req,res)=>{
+    static deleteProduct = async (req,res)=>{
         const pid = req.params.pid;
         try {
             const pManager = new ProductManager();
