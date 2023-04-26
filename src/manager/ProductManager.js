@@ -17,8 +17,8 @@ class ProductManager{
         this.#productManagerDAO = new ProductMongooseDAO();
     }
 
-    async add(pid){
-        const newProduct = await this.#productManagerDAO.insert(pid);
+    async add(product){
+        const newProduct = await this.#productManagerDAO.insert(product);
         return newProduct;
     }
     
@@ -35,3 +35,5 @@ class ProductManager{
         return state;
     }
 }
+
+export default ProductManager;
