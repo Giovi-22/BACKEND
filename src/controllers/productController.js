@@ -50,9 +50,10 @@ class ProductController{
 
     static updateProduct = async (req,res)=>{
         const pid = req.params.pid;
+        const data = req.body;
         try {
             const pManager = new ProductManager();
-            const productUpdated = await pManager.updateOne(pid);
+            const productUpdated = await pManager.updateOne(pid,data);
             res.status('200').json({status:'success',data:productUpdated});
         } catch (error) {
             res.status('500').json({status:'error',message:`Se ha producido un error: ${error.message}`});

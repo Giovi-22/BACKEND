@@ -1,11 +1,12 @@
 import { Router } from "express";
+import ProductController from "../controllers/productController";
 
 const pRouter = Router();
 
-pRouter.get('/','controlador');
-pRouter.get('/:pid','controlador');
-pRouter.post('/','controlador');
-pRouter.put('/:pid','controlador');
-pRouter.delete('/:pid','controlador');
+pRouter.get('/',ProductController.getProducts);
+pRouter.get('/:pid',ProductController.getOneProduct);
+pRouter.post('/',ProductController.addProduct);
+pRouter.put('/:pid',ProductController.updateProduct);
+pRouter.delete('/:pid',ProductController.deleteProduct);
 
 export default pRouter;
