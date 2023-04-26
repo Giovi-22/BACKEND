@@ -14,7 +14,28 @@ class ProductController{
             }
     }
 
-    static getProduct = async (req,res)=>{
+    static getProducts = async (req,res)=>{
+        try {
+            const pManager = new ProductManager();
+            const products = await pManager.getAll();
+            res.status('200').json({status:'success',data:products});
+        } catch (error) {
+            res.status('500').json({status:'error',message:`Se ha producido un error: ${error.message}`});
+            console.log(`Se ha producido un error: ${error.message}`);
+        }
+    }
+    static getManyProducts = async (req,res)=>{
+        const limit = req.query.limit;
+        try {
+            const pManager = new ProductManager();
+            const products = await pManager.getMany(limit);
+            res.status('200').json({status:'success',data:products});
+        } catch (error) {
+            res.status('500').json({status:'error',message:`Se ha producido un error: ${error.message}`});
+            console.log(`Se ha producido un error: ${error.message}`);
+        }
+    }
+    static getOneProduct = async (req,res)=>{
         const pid = req.params.pid;
         try {
             const pManager = new ProductManager();
@@ -25,6 +46,7 @@ class ProductController{
             console.log(`Se ha producido un error: ${error.message}`);
         }
     }
+
 
     static updateProduct = async (req,res)=>{
         const pid = req.params.pid;
