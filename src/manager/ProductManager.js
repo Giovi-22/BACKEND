@@ -21,6 +21,15 @@ class ProductManager{
         const newProduct = await this.#productManagerDAO.insert(product);
         return newProduct;
     }
+    async getAll(){
+        const products = await this.#productManagerDAO.getAll();
+        return products;
+    }
+
+    async getMany(limit){
+        const products = await this.#productManagerDAO.getMany(limit);
+        return products;
+    }
     
     async getOne(pid){
         const product = await this.#productManagerDAO.getOne(pid);
