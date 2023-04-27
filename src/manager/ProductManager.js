@@ -23,7 +23,7 @@ class ProductManager{
 
     async getMany(limit){
         //const products = await this.#productManagerDAO.getMany(limit);
-        const products = this.#productList.map((product)=>product,limit);
+        const products = this.#productList.filter((product,index)=> index <= limit);
         return products;
     }
     
@@ -39,8 +39,9 @@ class ProductManager{
     }
     async deleteOne(pid){
         //const state = await this.#productManagerDAO.deleteOne(pid);
-        const state = this.#productList.filter((product,index)=> index != pid);
-        return state;
+        this.#productList.at(pid).status = false
+        const productDeleted =this.#productList.at(pid);
+        return productDeleted;
     }
 }
 
