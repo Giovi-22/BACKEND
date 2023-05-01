@@ -8,7 +8,7 @@ class ProductController{
                 const newProduct = await pManager.add(product);
                 res.status(201).json({status:'success',data:newProduct});
             } catch (error) {
-                next({statusCode:500, message:error.message});
+                next({statusCode:error.cause.statusCode, message:error.cause.message});
                 return;
             }
     }

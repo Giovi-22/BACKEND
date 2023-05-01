@@ -3,7 +3,8 @@ import { productModel } from "../models/productModel.js";
 class ProductMongooseDAO{
 
     async insertOne(product){
-        const newProduct = await productModel.create(product);
+        try {
+            const newProduct = await productModel.create(product);
         return {
             id: newProduct._id,
             title: newProduct.title,
@@ -15,21 +16,38 @@ class ProductMongooseDAO{
             status: newProduct.status,
             category: newProduct.category
         }
+            
+        } catch (error) {
+          throw new Error("Error en la base de datos",{cause:{statusCode:500,message:error.message}});
+        }
+        
     }
-
+    async findByFilter(filter){
+        try {
+            const products = await productModel.find(filter);
+            return products;
+        } catch (error) {
+            throw new Error("Error en la base de datos",{cause:{statusCode:500,message:error.message}});
+        }
+        
+    }
     async findAll(){
-        const products = await productModel.find();
-        return products.map(product =>({
-            id: product._id,
-            title: product.title,
-            description: product.description,
-            price: product.price,
-            thumbnail: product.thumbnail,
-            stock: product.stock,
-            code: product.code,
-            status: product.status,
-            category: product.category
-        }))
+        try {
+            const products = await productModel.find();
+            return  products.map(product =>({
+                        id: product._id,
+                        title: product.title,
+                        description: product.description,
+                        price: product.price,
+                        thumbnail: product.thumbnail,
+                        stock: product.stock,
+                        code: product.code,
+                        status: product.status,
+                        category: product.category
+                    }))
+        } catch (error) {
+            throw new Error("Error en la base de datos",{cause:{statusCode:500,message:error.message}});
+        }    
     }
 
     async findById(pid){
@@ -47,38 +65,48 @@ class ProductMongooseDAO{
                 category: product.category
             }
         } catch (error) {
-            throw new Error(error.message);
+            throw new Error("Error en la base de datos",{cause:{statusCode:500,message:error.message}});
         }
     }
 
     async updateOne(pid,data){
-        const productUpdated = await productModel.findOneAndUpdate({_id:pid},data,{new:true});
-        return {
-            id: productUpdated._id,
-            title: productUpdated.title,
-            description: productUpdated.description,
-            price: productUpdated.price,
-            thumbnail: productUpdated.thumbnail,
-            stock: productUpdated.stock,
-            code: productUpdated.code,
-            status: productUpdated.status,
-            category: productUpdated.category
+        try {
+            const productUpdated = await productModel.findOneAndUpdate({_id:pid},data,{new:true});
+            return {
+                    id: productUpdated._id,
+                    title: productUpdated.title,
+                    description: productUpdated.description,
+                    price: productUpdated.price,
+                    thumbnail: productUpdated.thumbnail,
+                    stock: productUpdated.stock,
+                    code: productUpdated.code,
+                    status: productUpdated.status,
+                    category: productUpdated.category
+            }
+            
+        } catch (error) {
+            throw new Error("Error en la base de datos",{cause:{statusCode:500,message:error.message}});
         }
     }
 
     async deleteOne(pid){
-        const productDeleted = await productModel.findOneAndDelete({_id:pid});
-        return {
-            id: productDeleted._id,
-            title: productDeleted.title,
-            description: productDeleted.description,
-            price: productDeleted.price,
-            thumbnail: productDeleted.thumbnail,
-            stock: productDeleted.stock,
-            code: productDeleted.code,
-            status: productDeleted.status,
-            category: productDeleted.category
+        try {
+            const productDeleted = await productModel.findOneAndDelete({_id:pid});
+            return {
+                id: productDeleted._id,
+                title: productDeleted.title,
+                description: productDeleted.description,
+                price: productDeleted.price,
+                thumbnail: productDeleted.thumbnail,
+                stock: productDeleted.stock,
+                code: productDeleted.code,
+                status: productDeleted.status,
+                category: productDeleted.category
+            }  
+        } catch (error) {
+            throw new Error("Error en la base de datos",{cause:{statusCode:500,message:error.message}});
         }
+        
     }
 }
 
