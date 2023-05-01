@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
 import pRouter from './routes/productRouter.js';
+import { clientErrorHandler } from './middelwares/clientErrorHandler.js';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -11,6 +12,9 @@ const port = process.env.PORT;
 
 void (async ()=>
 {
+    try{
+        
+    
     await mongoose.connect(process.env.ECOMMERCEDB,{
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -22,8 +26,15 @@ void (async ()=>
       
     app.use('/api/products/',pRouter);
       
-      
-    app.listen(port,()=>console.log(`Servidor escuchando en el puerto ${port}`));
+    app.use(clientErrorHandler);  
 
+
+    app.listen(port,()=>console.log(`Servidor escuchando en el puerto ${port}`));
+    } catch (error) {
+        console.log("Dentro de la funcion principal void");
+        console.log(error.message);
+    }
+
+    
 
 })();
