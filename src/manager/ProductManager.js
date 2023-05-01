@@ -1,46 +1,35 @@
-//import ProductMongooseDAO from './ProductMongooseDAO'
+import ProductMongooseDAO from "../dao/productMongooseDAO.js";
 
 class ProductManager{
-        #productList;
-
+        #productManagerDAO;
     constructor(){
-        //this.#productManagerDAO = new ProductMongooseDAO();
-        this.#productList = [];
+        this.#productManagerDAO = new ProductMongooseDAO();
     }
 
     async add(product){
-        //const newProduct = await this.#productManagerDAO.insert(product);
-        const newProduct = product;
-        this.#productList.push(newProduct);
-        console.log("producto agregado",newProduct);
+        const newProduct = await this.#productManagerDAO.insertOne(product);
         return newProduct;
     }
     async getAll(){
-        //const products = await this.#productManagerDAO.getAll();
-        const products = this.#productList;
+        const products = await this.#productManagerDAO.findAll();
         return products;
     }
 
     async getMany(limit){
-        //const products = await this.#productManagerDAO.getMany(limit);
-        const products = this.#productList.filter((product,index)=> index <= limit);
+        const products = await this.#productManagerDAO.getMany(limit);
         return products;
     }
     
     async getOne(pid){
-        //const product = await this.#productManagerDAO.getOne(pid);
-        const product = this.#productList.at(pid);
+        const product = await this.#productManagerDAO.findById(pid);
         return product;
     }
     async updateOne(pid,data){
-        //const updatedProduct = await this.#productManagerDAO.updateOne(pid,data);
-        const updatedProduct  = Object.assign(this.#productList.at(pid),data);
+        const updatedProduct = await this.#productManagerDAO.updateOne(pid,data);
         return updatedProduct;
     }
     async deleteOne(pid){
-        //const state = await this.#productManagerDAO.deleteOne(pid);
-        this.#productList.at(pid).status = false
-        const productDeleted =this.#productList.at(pid);
+        const productDeleted = await this.#productManagerDAO.deleteOne(pid);
         return productDeleted;
     }
 }
