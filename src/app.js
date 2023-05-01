@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 
 import pRouter from './routes/productRouter.js';
 import { clientErrorHandler } from './middelwares/clientErrorHandler.js';
+import { serverErrorHandler } from './middelwares/serverErrorHandler.js';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -27,7 +28,7 @@ void (async ()=>
     app.use('/api/products/',pRouter);
       
     app.use(clientErrorHandler);  
-
+    app.use(serverErrorHandler);
 
     app.listen(port,()=>console.log(`Servidor escuchando en el puerto ${port}`));
     } catch (error) {

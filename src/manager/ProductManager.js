@@ -21,8 +21,13 @@ class ProductManager{
     }
     
     async getOne(pid){
-        const product = await this.#productManagerDAO.findById(pid);
-        return product;
+        try {
+            const product = await this.#productManagerDAO.findById(pid);
+            return product;
+        } catch (error) {
+          throw new Error(error.message);  
+        }
+        
     }
     async updateOne(pid,data){
         const updatedProduct = await this.#productManagerDAO.updateOne(pid,data);

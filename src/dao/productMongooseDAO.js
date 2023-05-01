@@ -33,17 +33,21 @@ class ProductMongooseDAO{
     }
 
     async findById(pid){
-        const product = await productModel.findById(pid);
-        return {
-            id: product._id,
-            title: product.title,
-            description: product.description,
-            price: product.price,
-            thumbnail: product.thumbnail,
-            stock: product.stock,
-            code: product.code,
-            status: product.status,
-            category: product.category
+        try {
+            const product = await productModel.findById(pid);
+            return {
+                id: product._id,
+                title: product.title,
+                description: product.description,
+                price: product.price,
+                thumbnail: product.thumbnail,
+                stock: product.stock,
+                code: product.code,
+                status: product.status,
+                category: product.category
+            }
+        } catch (error) {
+            throw new Error(error.message);
         }
     }
 
