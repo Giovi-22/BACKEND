@@ -5,10 +5,10 @@ import CartController from "../controllers/cartController.js";
 
 const cartRouter = Router();
 
-//cartRouter.get('/',"");
-//cartRouter.get('/:pid',"CartController");
+cartRouter.get('/',CartController.getAll);
+cartRouter.get('/:cid',CartController.get);
 cartRouter.post('/',CartController.create);
-//cartRouter.put('/:pid',"CartController");
-//cartRouter.delete('/:pid',"CartController");
+cartRouter.put('/:cid/',CartController.updateCart);
+cartRouter.delete('/:cid',CartController.delete);
 
 export default cartRouter;
