@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
 import pRouter from './routes/productRouter.js';
+import cartRouter from './routes/cartRouter.js';
+
 import { clientErrorHandler } from './middelwares/clientErrorHandler.js';
 import { serverErrorHandler } from './middelwares/serverErrorHandler.js';
 
@@ -16,7 +18,7 @@ void (async ()=>
     try{
         
     
-    await mongoose.connect(process.env.ECOMMERCEDB,{
+    await mongoose.connect(process.env.ECOMMERCEDB_URI,{
         useNewUrlParser: true,
         useUnifiedTopology: true
       });
@@ -26,7 +28,8 @@ void (async ()=>
     app.use(express.urlencoded({extended:true}));
       
     app.use('/api/products/',pRouter);
-      
+    app.use('/api/carts/',cartRouter);
+
     app.use(clientErrorHandler);  
     app.use(serverErrorHandler);
 
