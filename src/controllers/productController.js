@@ -8,32 +8,23 @@ class ProductController{
                 const newProduct = await pManager.add(product);
                 res.status(201).json({status:'success',data:newProduct});
             } catch (error) {
-                next({statusCode:error.cause.statusCode, message:error.cause.message});
+                next({statusCode:error.cause?.statusCode ?? 500, message:error.message});
                 return;
             }
     }
 
     static getProducts = async (req,res,next)=>{
+        const limit = +req.query.limit || 0;
         try {
             const pManager = new ProductManager();
-            const products = await pManager.getAll();
+            const products = await pManager.get(limit);
             res.status(200).json({status:'success',data:products});
         } catch (error) {
-            next({statusCode:500, message:error.message});
+            next({statusCode:error.cause?.statusCode ?? 500, message:error.message});
             return;
         }
     }
-    static getManyProducts = async (req,res,next)=>{
-        const limit = req.query.limit;
-        try {
-            const pManager = new ProductManager();
-            const products = await pManager.getMany(limit);
-            res.status(200).json({status:'success',data:products});
-        } catch (error) {
-            next({statusCode:500, message:error.message});
-            return;
-        }
-    }
+
     static getOneProduct = async (req,res,next)=>{
         const pid = req.params.pid;
         try {
@@ -41,8 +32,7 @@ class ProductController{
             const product = await pManager.getOne(pid);
             res.status(200).json({status:'success',data:product});
         } catch (error) {
-            console.log("error en getONeProduct")
-            next({statusCode:500, message:error.message})
+            next({statusCode:error.cause?.statusCode ?? 500, message:error.message});
         }
     }
 
@@ -55,7 +45,7 @@ class ProductController{
             const productUpdated = await pManager.updateOne(pid,data);
             res.status(200).json({status:'success',data:productUpdated});
         } catch (error) {
-            next({statusCode:500, message:error.message})
+            next({statusCode:error.cause?.statusCode ?? 500, message:error.message});
             return;
         }
     }
@@ -67,7 +57,7 @@ class ProductController{
             const productDeleted = await pManager.deleteOne(pid);
             res.status(200).json({status:'success',data:productDeleted});
         } catch (error) {
-            next({statusCode:500, message:error.message})
+            next({statusCode:error.cause?.statusCode ?? 500, message:error.message});
             return;
         }
     }

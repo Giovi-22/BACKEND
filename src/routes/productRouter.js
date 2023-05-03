@@ -4,9 +4,9 @@ import { productValidator } from "../middelwares/productValidator.js";
 
 const pRouter = Router();
 
+pRouter.post('/',productValidator,ProductController.addProduct);
 pRouter.get('/',ProductController.getProducts);
 pRouter.get('/:pid',ProductController.getOneProduct);
-pRouter.post('/',productValidator,ProductController.addProduct);
 pRouter.put('/:pid',ProductController.updateProduct);
 pRouter.delete('/:pid',ProductController.deleteProduct);
 

@@ -38,7 +38,6 @@ class CartController{
 
     static get = async (req,res,next)=>{
         const cid = req.params.cid;
-        console.log("cid: ",cid)
         try {
             const cartM = new CartManager();
             const cart = await cartM.getOne(cid);

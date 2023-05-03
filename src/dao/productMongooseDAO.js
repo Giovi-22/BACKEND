@@ -18,7 +18,7 @@ class ProductMongooseDAO{
         }
             
         } catch (error) {
-          throw new Error("Error en la base de datos",{cause:{statusCode:500,message:error.message}});
+          throw new Error(error.message);
         }
         
     }
@@ -27,13 +27,13 @@ class ProductMongooseDAO{
             const products = await productModel.find(filter);
             return products;
         } catch (error) {
-            throw new Error("Error en la base de datos",{cause:{statusCode:500,message:error.message}});
+            throw new Error(error.message);
         }
         
     }
-    async findAll(){
+    async find(limit){
         try {
-            const products = await productModel.find();
+            const products = await productModel.find().limit(limit);
             return  products.map(product =>({
                         id: product._id,
                         title: product.title,
@@ -46,10 +46,10 @@ class ProductMongooseDAO{
                         category: product.category
                     }))
         } catch (error) {
-            throw new Error("Error en la base de datos",{cause:{statusCode:500,message:error.message}});
+            throw new Error(error.message);
         }    
     }
-
+    
     async findById(pid){
         try {
             const product = await productModel.findById(pid);
@@ -65,7 +65,7 @@ class ProductMongooseDAO{
                 category: product.category
             }
         } catch (error) {
-            throw new Error("Error en la base de datos",{cause:{statusCode:500,message:error.message}});
+            throw new Error(error.message);
         }
     }
 
@@ -85,7 +85,7 @@ class ProductMongooseDAO{
             }
             
         } catch (error) {
-            throw new Error("Error en la base de datos",{cause:{statusCode:500,message:error.message}});
+            throw new Error(error.message);
         }
     }
 
@@ -104,7 +104,7 @@ class ProductMongooseDAO{
                 category: productDeleted.category
             }  
         } catch (error) {
-            throw new Error("Error en la base de datos",{cause:{statusCode:500,message:error.message}});
+            throw new Error(error.message);
         }
         
     }

@@ -3,7 +3,7 @@ import CartMongooseDAO from "../dao/cartMongooseDAO.js";
 
 class CartManager{
     #cartMongooseDAO;
-    constructor(path){
+    constructor(){
         this.#cartMongooseDAO = new CartMongooseDAO();
     }
     

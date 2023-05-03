@@ -35,7 +35,6 @@ void (async ()=>
 
     app.listen(port,()=>console.log(`Servidor escuchando en el puerto ${port}`));
     } catch (error) {
-        console.log("Dentro de la funcion principal void");
         console.log(error.message);
     }
 
